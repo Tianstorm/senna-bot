@@ -30,7 +30,7 @@ case 'megumin':
 break
 
 default:
- }
+ } 
 }
 
 handler.help = ['waifu', 'neko', 'megumin', 'loli']

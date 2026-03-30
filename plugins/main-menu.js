@@ -34,7 +34,7 @@ const defaultMenu = {
 🟢 Tiempo activo : %muptime
 %sbot
 ▢ ADD
-• https://instagram.com/fg.error
+• https://tiktok.com/@fg.error
 ────────────
 %readmore
   ≡ *LISTA DE MENUS*

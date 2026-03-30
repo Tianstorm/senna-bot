@@ -1,4 +1,3 @@
-//import db from '../lib/database.js'
 
 let handler = async (m, { text }) => {
     let hash = text

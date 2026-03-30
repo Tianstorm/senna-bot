@@ -32,6 +32,7 @@ global.fg_ig = 'https://instagram.com/fg.error'
 global.fg_sc = 'https://github.com/FG98F/dylux-bot' 
 global.fg_yt = 'https://youtube.com/fg98f'
 global.fg_pyp = 'https://paypal.me/fg98f'
+global.fg_tt = 'https://tiktok.com/@fg.error'
 global.fg_logo = 'https://i.ibb.co/1zdz2j3/logo.jpg' 
 
 //--- Grupos WA

@@ -24,6 +24,8 @@ let handler = async (m, { conn, usedPrefix, command }) => {
   *FG98*
 ▢ *Instagram :*
 - ${fg_ig}
+▢ *TikTok :*
+- ${fg_tt}
 ▢ *Telegram :*
 - t.me/fg_userss (grupo)
 ▢ *YouTube :*

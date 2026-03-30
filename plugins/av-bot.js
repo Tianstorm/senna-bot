@@ -11,10 +11,11 @@ conn.sendButton(m.chat, `Hola *${name}*\n`, global.fg_ig, null, [
       [`⌬ Grupos`, '/gpdylux']
     ], m) 
 
-  conn.sendFile(m.chat, av, 'audio.mp3', null, m, true, { type: 'audioMessage', ptt: true })
+    conn.sendFile(m.chat, av, 'audio.ogg', '', m, true, { asAudio: true, ptt: true})
+    //await conn.sendFile(m.chat, av, 'file.mp4', '', m, 1, { mimetype: 'audio/mp4' })
 } 
 
-handler.customPrefix = /^(bot|senna)$/i
+handler.customPrefix = /^(bot|senna|dylux)$/i
 handler.command = new RegExp
 
 export default handler

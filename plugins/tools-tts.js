@@ -6,7 +6,7 @@ const defaultLang = 'es-es'
 let handler = async (m, { conn, args, usedPrefix, command }) => {
 
   let lang = args[0]
-  let text = args.slice(1).join(' ')  
+  let text = args.slice(1).join(' ')
   if ((args[0] || '').length !== 2) {
     lang = defaultLang
     text = args.join(' ')
@@ -18,13 +18,13 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
   catch (e) {
     m.reply(e + '')
     text = args.join(' ')
-    if (!text) throw `📌 *Ejemplo : \n${usedPrefix}${command} en hello world`
+    if (!text) throw `📌 Ejemplo : \n${usedPrefix}${command} en hello world`
     res = await tts(text, defaultLang)
   } finally {
-    if (res) conn.sendFile(m.chat, res, 'tts.opus', null, m, true)
+    if (res) conn.sendFile(m.chat, res, 'audio.ogg', '', m, true, { asAudio: true, ptt: true})
   }
 }
-handler.help = ['tts <lang> <teks>']
+handler.help = ['tts <lang> <text>']
 handler.tags = ['tools']
 handler.command = ['tts', 'voz'] 
 
