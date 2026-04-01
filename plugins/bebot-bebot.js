@@ -18,7 +18,9 @@ if (!(global.conns instanceof Array)) global.conns = []
 
 let handler = async (m, { conn: parent, args, usedPrefix, command }) => {
 
-let userBot = global.db.data.users[m.sender]
+if (!((args[0] && args[0] == 'plz') || (await global.conn).user.jid == parent.user.jid)) {
+  throw `📌 Este comando solo puede ser usado en el bot principal\n\n wa.me/${global.conn.user.jid.split`@`[0]}?text=${usedPrefix}botclone`
+}
 
 async function startBot() {
 

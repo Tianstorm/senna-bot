@@ -34,6 +34,7 @@ global.fg_yt = 'https://youtube.com/fg98f'
 global.fg_pyp = 'https://paypal.me/fg98f'
 global.fg_tt = 'https://tiktok.com/@fg.error'
 global.fg_logo = 'https://i.ibb.co/1zdz2j3/logo.jpg' 
+global.fg_avatar = 'https://raw.githubusercontent.com/fg-error/fg-team/refs/heads/main/discord/avatar.png'
 
 //--- Grupos WA
 global.id_canal = '120363177092661333@newsletter' //-ID de canal de WhatsApp

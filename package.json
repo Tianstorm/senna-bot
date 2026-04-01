@@ -8,13 +8,13 @@
     "name": "FG98"
   },
   "license": "GPL-3.0-or-later",
-  "homepage": "https://github.com/FG98F/senna-bot",
+  "homepage": "https://github.com/fg-error/senna-bot",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FG98F/senna-bot.git"
+    "url": "git+https://github.com/fg-error/senna-bot.git"
   },
   "bugs": {
-    "url": "https://github.com/FG98F/senna/issues"
+    "url": "https://github.com/fg-error/senna/issues"
   },
   "directories": {
     "lib": "lib",

@@ -177,8 +177,7 @@ if (settings.sologp && !isGroup) {
 
     const allowedPrivateCmd = [
         'jadibot','bebot','getcode','serbot','bots',
-        'stop','support','donate','off','on','s',
-        'tiktok','code','newcode','join'
+        'stop','support','donate','off','on','code'
     ]
 
     const firstWord = text.trim().split(' ')[0]
@@ -598,10 +597,10 @@ export async function participantsUpdate({ id, participants, action }) {
                 if (!user) continue
 
                 let pp = await this.profilePictureUrl(user, 'image')
-                    .catch(_ => 'https://i.ibb.co/1ZxrXKJ/avatar-contact.jpg')
+                    .catch(_ => global.fg_avatar)
 
                 text = action === 'promote'
-                    ? (chat.sPromote || this.spromote || conn.spromote || '@user ahora es administrador')
+                    ? (chat.sPromote || this.spromote || conn.spromote || '@user ahora es administrador 🛡️')
                     : (chat.sDemote || this.sdemote || conn.sdemote || '@user ya no es administrador')
 
                 text = text.replace('@user', '@' + user.split('@')[0])
@@ -626,15 +625,43 @@ export async function groupsUpdate(groupsUpdate) {
         if (!id) continue
         let chats = global.db.data.chats[id], text = ''
         if (!chats?.detect) continue
-        if (groupUpdate.desc) text = (chats.sDesc || this.sDesc || conn.sDesc || 'Descripción cambiada a \n@desc').replace('@desc', groupUpdate.desc)
-        if (groupUpdate.subject) text = (chats.sSubject || this.sSubject || conn.sSubject || 'El nombre del grupo cambió a \n@group').replace('@group', groupUpdate.subject)
-        if (groupUpdate.icon) text = (chats.sIcon || this.sIcon || conn.sIcon || 'El icono del grupo cambió a').replace('@icon', groupUpdate.icon)
-        if (groupUpdate.revoke) text = (chats.sRevoke || this.sRevoke || conn.sRevoke || 'El enlace del grupo cambia a\n@revoke').replace('@revoke', groupUpdate.revoke)
+        if (groupUpdate.desc) text = (chats.sDesc || this.sDesc || conn.sDesc).replace('@desc', groupUpdate.desc)
+        if (groupUpdate.subject) text = (chats.sSubject || this.sSubject || conn.sSubject).replace('@group', groupUpdate.subject)
+        if (groupUpdate.icon) text = (chats.sIcon || this.sIcon || conn.sIcon).replace('@icon', groupUpdate.icon)
+        if (groupUpdate.revoke) text = (chats.sRevoke || this.sRevoke || conn.sRevoke).replace('@revoke', groupUpdate.revoke)
         if (!text) continue
         await this.sendMessage(id, { text, mentions: this.parseMention(text) })
     }
 }
 
+//-- anti delete msg
+/*export async function deleteUpdate(message) {
+    try {
+        const { fromMe, id, participant } = message
+        if (fromMe)
+            return
+        let msg = this.serializeM(this.loadMessage(id))
+        if (!msg)
+            return
+        let chat = global.db.data.chats[msg.chat] || {}
+        if (chat.delete)
+            return
+        await this.reply(msg.chat, `
+≡ Borró un mensaje  
+┌─⊷ ANTI DELETE
+▢ *Nombre :* @${participant.split`@`[0]} 
+└─────────────
+Para desactivar esta función, escriba 
+/off antidelete
+`.trim(), msg, {
+            mentions: [participant]
+        })
+        this.copyNForward(msg.chat, msg).catch(e => console.log(e, msg))
+    } catch (e) {
+        console.error(e)
+    }
+}
+*/
 
 global.dfail = (type, m, conn) => {
     let msg = {

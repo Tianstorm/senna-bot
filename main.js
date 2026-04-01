@@ -284,18 +284,20 @@ global.conn.store = store
 
   conn.welcome = 'Hola, @user\nBienvenido a @group'
   conn.bye = 'adiós @user'
-  conn.spromote = '@user promovió a admin'
-  conn.sdemote = '@user degradado'
-  conn.sDesc = 'La descripción ha sido cambiada a \n@desc'
-  conn.sSubject = 'El nombre del grupo ha sido cambiado a \n@group'
-  conn.sIcon = 'El icono del grupo ha sido cambiado'
-  conn.sRevoke = 'El enlace del grupo ha sido cambiado a \n@revoke'
+  conn.spromote = '@user ahora es administrador 🛡️'
+  conn.sdemote = '@user ya no es administrador'
+  conn.sDesc = '📝 *La descripción del grupo fue actualizada:*\n\n@desc'
+  conn.sSubject = '📢 *El nombre del grupo cambió a:*\n\n@group'
+  conn.sIcon = '🖼️ *Se actualizó la foto del grupo.*'
+  conn.sRevoke = '🔗 *El enlace del grupo fue restablecido:*\n\n@revoke'
   conn.handler = handler.handler.bind(global.conn)
   conn.participantsUpdate = handler.participantsUpdate.bind(global.conn)
   conn.groupsUpdate = handler.groupsUpdate.bind(global.conn)
   conn.connectionUpdate = connectionUpdate.bind(global.conn)
   conn.credsUpdate = saveCreds.bind(global.conn, true)
+  // conn.onDelete = handler.deleteUpdate.bind(global.conn)
 
+  // conn.ev.on('message.delete', conn.onDelete)
   conn.ev.on('messages.upsert', conn.handler)
   conn.ev.on('group-participants.update', conn.participantsUpdate)
   conn.ev.on('groups.update', conn.groupsUpdate)
