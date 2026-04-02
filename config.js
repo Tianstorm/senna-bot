@@ -13,7 +13,7 @@ global.prems = ['50489079501', '573143917092']
 global.botNumber = ['']  //-- numero del bot
 global.APIs = { // API Prefix
   // name: 'https://website' 
-  nrtm: 'https://fg-nrtm.ddns.net',
+  fg_ss: 'https://fg-ss.ddns.net',
   fgmods: 'https://api.fgmods.xyz'
   //fgmods: 'https://api-fgmods.ddns.net'
 }

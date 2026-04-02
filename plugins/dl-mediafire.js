@@ -10,6 +10,9 @@ let handler = async (m, { conn, args, text, usedPrefix, command, isOwner, isPrem
     m.react(rwait)
 
     let limit = isPrems || isOwner ? prem : free
+     let u = /https?:\/\//.test(args[0]) ? args[0] : 'https://' + args[0]
+    let ss = await (await fetch(global.API('fg_ss', '/api/ssweb', { delay: 1000, url: u }))).buffer()
+
   try {
 
 	let res = await fg.mediafire(args[0])
@@ -24,8 +27,8 @@ let handler = async (m, { conn, args, text, usedPrefix, command, isOwner, isPrem
 *🔼Subido:* ${aploud}
 ${isLimit ? `\n▢ Limite superado *+${free} MB* pasate a premium para descargar hasta *${prem} MB*` : ''} 
 `.trim()
-//await conn.sendFile(m.chat, ss, 'ssweb.png', caption, m, null, fwc)
-m.reply(caption)
+await conn.sendFile(m.chat, ss, 'ssweb.png', caption, m, null, fwc)
+//m.reply(caption)
 if(!isLimit) await conn.sendFile(m.chat, url, filename, '', m, null, { mimetype: ext, asDocument: true })
  
 m.react(done)
