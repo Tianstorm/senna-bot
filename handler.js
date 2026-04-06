@@ -635,33 +635,75 @@ export async function groupsUpdate(groupsUpdate) {
 }
 
 //-- anti delete msg
-/*export async function deleteUpdate(message) {
+export async function deleteUpdate(update) {
     try {
-        const { fromMe, id, participant } = message
-        if (fromMe)
-            return
-        let msg = this.serializeM(this.loadMessage(id))
-        if (!msg)
-            return
-        let chat = global.db.data.chats[msg.chat] || {}
-        if (chat.delete)
-            return
-        await this.reply(msg.chat, `
-≡ Borró un mensaje  
-┌─⊷ ANTI DELETE
-▢ *Nombre :* @${participant.split`@`[0]} 
+        const { key, update: msgUpdate } = update || {}
+
+       
+        if (!key || !msgUpdate) return
+        const { remoteJid, id, participant, fromMe } = key
+
+        if (fromMe) return
+
+        // detectar eliminación
+        const isDelete =
+            msgUpdate?.message?.protocolMessage?.type === 0 ||
+            msgUpdate?.messageStubType === 1
+
+        if (!isDelete) return
+
+        // cargar mensaje original
+        let raw = await this.loadMessage(remoteJid, id)
+        if (!raw || !raw.message) return
+
+        if (!raw.key) raw.key = {}
+        if (raw.key.fromMe === undefined) raw.key.fromMe = false
+
+        let msg = this.serializeM ? this.serializeM(raw) : raw
+
+        let chat = global.db.data.chats?.[msg.chat] || {}
+        if (chat.delete) return
+
+        let user = participant || remoteJid
+
+        // ---- Info ---
+        let pushName = msg.pushName || 'Desconocido'
+        let type = Object.keys(msg.message || {})[0] || 'desconocido'
+        let text =
+            msg.text ||
+            msg.message?.conversation ||
+            msg.message?.extendedTextMessage?.text ||
+            'Sin texto'
+
+        let info = `
+≡ *ANTI DELETE DETECTADO*
+
+┌─⊷ 📌 *Usuario*
+▢ *Nombre* : ${pushName}
+▢ *Número* : @${user.split('@')[0]}
 └─────────────
-Para desactivar esta función, escriba 
-/off antidelete
-`.trim(), msg, {
-            mentions: [participant]
+┌─⊷ 📂 *Mensaje*
+▢ *Tipo* : ${type}
+▢ *Contenido* : ${text}
+└────────────
+
+💡 Usa */off antidelete* para desactivar
+`.trim()
+
+        await this.reply(msg.chat, info, msg, {
+            mentions: [user]
         })
-        this.copyNForward(msg.chat, msg).catch(e => console.log(e, msg))
+
+        // reenviar mensaje original
+        await this.copyNForward(msg.chat, raw).catch(e =>
+            console.log('Forward error:', e)
+        )
+
     } catch (e) {
-        console.error(e)
+        console.error('Error en deleteUpdate:', e)
     }
 }
-*/
+
 
 global.dfail = (type, m, conn) => {
     let msg = {

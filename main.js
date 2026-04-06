@@ -295,14 +295,23 @@ global.conn.store = store
   conn.groupsUpdate = handler.groupsUpdate.bind(global.conn)
   conn.connectionUpdate = connectionUpdate.bind(global.conn)
   conn.credsUpdate = saveCreds.bind(global.conn, true)
-  // conn.onDelete = handler.deleteUpdate.bind(global.conn)
 
-  // conn.ev.on('message.delete', conn.onDelete)
   conn.ev.on('messages.upsert', conn.handler)
   conn.ev.on('group-participants.update', conn.participantsUpdate)
   conn.ev.on('groups.update', conn.groupsUpdate)
   conn.ev.on('connection.update', conn.connectionUpdate)
   conn.ev.on('creds.update', conn.credsUpdate)
+    
+  conn.ev.on('messages.update', async (updates) => {
+    for (const update of updates) {
+        try {
+            await handler.deleteUpdate.call(conn, update)
+        } catch (e) {
+            console.error('Error en delete listener:', e)
+        }
+    }
+})
+
   isInit = false
   return true
 }

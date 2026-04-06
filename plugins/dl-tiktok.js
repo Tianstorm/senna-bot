@@ -4,7 +4,7 @@ import fg from 'fg-senna'
 let handler = async (m, { conn, text, args, usedPrefix, command }) => {
     
         if (!args[0]) throw `📌 Ejemplo : ${usedPrefix + command} https://vm.tiktok.com/ZMYG92bUh/`
-        if (!args[0].match(/tiktok/gi)) throw `❎ ${mssg.noLink('TikTok')}`
+        if (!args[0].match(/tiktok/gi)) throw `❎ Revisa que el link sea de TikTok`
         m.react(rwait)
       
         try {

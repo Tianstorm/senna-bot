@@ -228,7 +228,7 @@ conn.ev.off("creds.update", conn.credsUpdate)
 
 }
 
-conn.welcome = global.conn?.welcome || ""
+conn.welcome = global.conn?.welcome || "" 
 conn.bye = global.conn?.bye || ""
 conn.spromote = global.conn?.spromote || ""
 conn.sdemote = global.conn?.sdemote || ""
@@ -236,7 +236,6 @@ conn.sdemote = global.conn?.sdemote || ""
 conn.handler = handlerModule.handler.bind(conn)
 conn.participantsUpdate = handlerModule.participantsUpdate.bind(conn)
 conn.groupsUpdate = handlerModule.groupsUpdate.bind(conn)
-
 conn.connectionUpdate = connectionUpdate.bind(conn)
 conn.credsUpdate = saveCreds.bind(conn)
 
