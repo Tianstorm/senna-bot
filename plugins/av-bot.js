@@ -11,7 +11,7 @@ conn.sendButton(m.chat, `Hola *${name}*\n`, global.fg_ig, null, [
       [`⌬ Grupos`, '/gpdylux']
     ], m) 
 
-    conn.sendFile(m.chat, av, 'audio.ogg', '', m, true, { asAudio: true, ptt: true})
+    conn.sendFile(m.chat, av, 'audio.ogg', '', m, true, { asAudio: true, ptt: false})
     //await conn.sendFile(m.chat, av, 'file.mp4', '', m, 1, { mimetype: 'audio/mp4' })
 } 
 

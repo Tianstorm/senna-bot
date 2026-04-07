@@ -19,8 +19,8 @@ let handler = async (m, { conn, usedPrefix, command }) => {
       const audio = await toAudio(media, 'mp4')
       if (!audio?.data) throw '❌ Error al convertir a MP3'
 
-     // conn.sendFile(m.chat, audio.data, 'audio.ogg', '', m, true, { asAudio: true})
-      conn.sendMessage(m.chat, {document: audio.data, mimetype: 'audio/mpeg', fileName: 'audio.mp3'},{ quoted: m })
+      conn.sendFile(m.chat, audio.data, 'audio.ogg', '', m, false)
+      //conn.sendMessage(m.chat, {document: audio.data, mimetype: 'audio/mpeg', fileName: 'audio.mp3'},{ quoted: m })
     }
 
     // ================= PTT / VOICE =================

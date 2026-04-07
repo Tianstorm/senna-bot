@@ -44,8 +44,9 @@ export async function handler(chatUpdate) {
 global.db.data ||= {}
 global.db.data.users ||= {}
 global.db.data.chats ||= {}
-global.db.data.stats ||= {}
+global.db.data.stats ||= {} 
 global.db.data.settings ||= {}
+global.db.data.statsMsg ||= {} //contador de mensaje por grupo
     
 
     
@@ -474,6 +475,22 @@ const isBotAdmin  = bot?.admin === 'admin' || bot?.admin === 'superadmin' || fal
                 user.exp += m.exp
                 user.diamond -= m.diamond * 1
             }
+
+       
+// 📊 CONTADOR DE MENSAJES POR GRUPO
+if (m.isGroup && m.sender) {
+    let statsMsg = global.db.data.statsMsg || {}
+
+    let chatId = m.chat
+    let userId = m.sender
+
+    if (!statsMsg[chatId]) statsMsg[chatId] = {}
+    if (!statsMsg[chatId][userId]) statsMsg[chatId][userId] = 0
+
+    statsMsg[chatId][userId] += 1
+
+    global.db.data.statsMsg = statsMsg
+}
 
             let stat
             if (m.plugin) {
