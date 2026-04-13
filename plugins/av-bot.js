@@ -1,7 +1,7 @@
 
 let handler = async (m, { conn}) => {
 
-let name = conn.getName(m.sender)
+let name = await conn.getName(m.sender)
 let av = `./src/mp3/${pickRandom(["criss", "andrea"])}.mp3`
 let fg_logo = `https://i.ibb.co/1zdz2j3/logo.jpg`
 

@@ -10,7 +10,7 @@ let pp = await conn.profilePictureUrl(who, 'image').catch(_ => './src/avatar_con
 let user = global.db.data.users[who]
 let { name, exp, diamond, lastclaim, registered, regTime, age, level, role, warn, genero, prem, coin, bank} = global.db.data.users[who]
 let { min, xp, max } = xpRange(user.level, global.multiplier)
-let username = conn.getName(who)
+let username = await conn.getName(who)
 let math = max - xp
 let premG = global.prems.includes(who.split`@`[0]) || prem
 let sn = createHash('md5').update(who).digest('hex')
@@ -20,7 +20,6 @@ let str = `
 ▢ *🔖Nombre:* 
    • ${username} ${registered ? '\n   • ' + name + ' ': ''}
    • @${who.replace(/@.+/, '')}
-▢ *📱Numero:* ${PhoneNumber('+' + who.replace('@s.whatsapp.net', '')).getNumber('international')}
 ▢ *🔗Link:* wa.me/${who.split`@`[0]}${registered ? `\n▢ *🎈Edad:* ${age}\n▢ *🧬Genero:* ${genero}` : ''}
 ▢ *🪙Coins:* ${bank.toLocaleString()}
 ▢ *💎Diamantes:* ${diamond.toLocaleString()}

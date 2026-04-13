@@ -1,12 +1,10 @@
- import { smsg } from './lib/simple.js'
+import { smsg } from './lib/simple.js'
 import { format } from 'util' 
 import { fileURLToPath } from 'url'
 import path, { join } from 'path'
 import { unwatchFile, watchFile } from 'fs'
 import chalk from 'chalk'
 import fetch from 'node-fetch'
-
-
 
 /**
  * @type {import('@whiskeysockets/baileys')}
@@ -92,10 +90,6 @@ global.db.data.statsMsg ||= {} //contador de mensaje por grupo
         }
     }
 
-    // =============================
-    // CHAT INIT
-    // =============================
-
     const chatDefaults = {
         isBanned: false,
         welcome: false,
@@ -120,10 +114,6 @@ global.db.data.statsMsg ||= {} //contador de mensaje por grupo
             chat[key] = chatDefaults[key]
         }
     }
-
-    // =============================
-    // SETTINGS INIT
-    // =============================
 
     if (!global.db.data.settings)
         global.db.data.settings = {}
@@ -156,10 +146,6 @@ global.db.data.statsMsg ||= {} //contador de mensaje por grupo
 }
 
 //---- AA  
-
-// =============================
-// BASIC MESSAGE GUARDS
-// =============================
 
 const opts = global.opts || {}
 const isGroup = m.chat?.endsWith('g.us')
@@ -237,22 +223,16 @@ const isPrems = isROwner || global.prems.map(v => normalize(v)).includes(sender)
         m.exp += Math.ceil(Math.random() * 10)
 
         let usedPrefix
-        //let _user = global.db.data && global.db.data.users && global.db.data.users[m.sender]
         
-           const groupMetadata = m.isGroup? conn.chats[m.chat]?.metadata || await this.groupMetadata(m.chat).catch(() => null) : null
-           const participants = groupMetadata?.participants || []
+        const groupMetadata = m.isGroup ? await this.groupMetadata(m.chat).catch(() => null) : null
+        const participants = groupMetadata?.participants || []
+const user = (m.isGroup ? participants.find(u => this.decodeJid(u.id || u.jid) === this.decodeJid(m.sender)) : {}) || {}
+const bot = (m.isGroup ? participants.find(u => { let id = this.decodeJid(u.id || u.jid); return id === this.decodeJid(this.user.jid) || id === this.decodeJid(this.user.lid) }) : {}) || {}
 
+const isRAdmin = user?.admin === 'superadmin' || this.decodeJid(groupMetadata?.owner) === this.decodeJid(m.sender)
+const isAdmin = !!user?.admin || this.decodeJid(groupMetadata?.owner) === this.decodeJid(m.sender)
+const isBotAdmin = !!bot?.admin
 
-            const senderJid = this.decodeJid(m.sender)
-
-              const user = m.isGroup ? participants.find(u => this.decodeJid(u.id) === senderJid) || {} : {}
-           // const user = participants.find((u) => (u.jid || u.phoneNumber || u.id) === m.sender) || {};
-              const bot  = participants.find((u) => (u.jid || u.phoneNumber || u.id) === this.user.jid) || {};
-
-
-const isRAdmin = user.admin === 'superadmin'
-const isAdmin = user?.admin === 'admin' || user?.admin === 'superadmin'
-const isBotAdmin  = bot?.admin === 'admin' || bot?.admin === 'superadmin' || false;
 
         const ___dirname = path.join(path.dirname(fileURLToPath(import.meta.url)), './plugins')
         
@@ -559,8 +539,8 @@ export async function participantsUpdate({ id, participants, action }) {
                 const user = normalize(participant)
                 if (!user) continue
 
-                let pp = 'https://i.ibb.co/1ZxrXKJ/avatar-contact.jpg'
-                let ppgp = 'https://i.ibb.co/1ZxrXKJ/avatar-contact.jpg'
+                let pp = fg_avatar
+                let ppgp = fg_avatar
 
                 try { pp = await this.profilePictureUrl(user, 'image') } catch {}
                 try { ppgp = await this.profilePictureUrl(id, 'image') } catch {}

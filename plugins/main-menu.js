@@ -1,9 +1,6 @@
-//import db from '../lib/database.js'
 import { promises } from 'fs'
 import { join } from 'path'
-import fetch from 'node-fetch'
 import { xpRange } from '../lib/levelling.js'
-//import { plugins } from '../lib/plugins.js'
 let tags = {
   'main': 'ACERCA DE',
   'bebot': 'SUB BOTS',
@@ -54,29 +51,7 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
     let { exp, diamond, level, role } = global.db.data.users[m.sender]
     let { min, xp, max } = xpRange(level, global.multiplier)
     let name = await conn.getName(m.sender)
-    let d = new Date(new Date + 3600000)
-    let locale = 'es'
-    // d.getTimeZoneOffset()
-    // Offset -420 is 18.00
-    // Offset    0 is  0.00
-    // Offset  420 is  7.00
-    let weton = ['Pahing', 'Pon', 'Wage', 'Kliwon', 'Legi'][Math.floor(d / 84600000) % 5]
-    let week = d.toLocaleDateString(locale, { weekday: 'long' })
-    let date = d.toLocaleDateString(locale, {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    })
-    let dateIslamic = Intl.DateTimeFormat(locale + '-TN-u-ca-islamic', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    }).format(d)
-    let time = d.toLocaleTimeString(locale, {
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric'
-    })
+    
     let _uptime = process.uptime() * 1000
     let _muptime
     if (process.send) {
@@ -131,7 +106,7 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
     let replace = {
       '%': '%',
       p: _p, uptime, muptime,
-      me: conn.getName(conn.user.jid),
+      me: await conn.getName(conn.user.jid),
       sbot: (conn.user.jid == global.conn.user.jid ? '' : `\n▢ ✨ *Sub-Bot de:*\nwa.me/${global.conn.user.jid.split`@`[0]}`), 
       npmname: _package.name,
       npmdesc: _package.description,
@@ -141,7 +116,7 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
       totalexp: exp,
       xp4levelup: max - exp,
       github: _package.homepage ? _package.homepage.url || _package.homepage : '[unknown github url]',
-      level, diamond, name, weton, week, date, dateIslamic, time, totalreg, rtotalreg, role,
+      level, diamond, name, totalreg, rtotalreg, role,
       readmore: readMore
     }
     text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])

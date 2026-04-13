@@ -3,7 +3,7 @@ import fetch from 'node-fetch'
 
 let handler = async (m, { conn }) => {
 
-  let name = conn.getName(m.sender)
+  let name = await conn.getName(m.sender)
   let pp = await conn.profilePictureUrl(m.sender, 'image')
     .catch(_ => 'https://i.ibb.co/1ZxrXKJ/avatar-contact.jpg')
 

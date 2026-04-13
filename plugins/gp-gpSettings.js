@@ -6,7 +6,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     if (isClose === undefined)
 
     return m.reply(`
-🛡️ ${mssg.gpSetting}
+🛡️ Configuración de grupo\n\nAbrir y cerrar el grupo
 
 *▢ ${usedPrefix + command} close*
 *▢ ${usedPrefix + command} open*
