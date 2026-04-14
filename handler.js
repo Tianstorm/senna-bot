@@ -226,7 +226,7 @@ const isPrems = isROwner || global.prems.map(v => normalize(v)).includes(sender)
         
         const groupMetadata = m.isGroup ? await this.groupMetadata(m.chat).catch(() => null) : null
         const participants = groupMetadata?.participants || []
-const user = (m.isGroup ? participants.find(u => this.decodeJid(u.id || u.jid) === this.decodeJid(m.sender)) : {}) || {}
+const user = (m.isGroup ? participants.find(u => { let id = this.decodeJid(u.id || u.jid); return [this.decodeJid(m.sender), this.decodeJid(m.key?.participant), this.decodeJid(m.participant)].filter(Boolean).includes(id) }) : {}) || {}
 const bot = (m.isGroup ? participants.find(u => { let id = this.decodeJid(u.id || u.jid); return id === this.decodeJid(this.user.jid) || id === this.decodeJid(this.user.lid) }) : {}) || {}
 
 const isRAdmin = user?.admin === 'superadmin' || this.decodeJid(groupMetadata?.owner) === this.decodeJid(m.sender)
